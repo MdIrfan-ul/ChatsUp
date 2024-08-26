@@ -63,10 +63,11 @@ npm install
 ```
 
 3. Set up environment variables in a .env file:
+```bash
 MONGO_URI=<your_mongodb_connection_string>
 JWT_SECRET=<your_jwt_secret>
 PORT=<your_desired_port>
-
+```
 4. Start the server:
 
 ```bash
