@@ -8,7 +8,6 @@ const UserRoutes = express.Router();
 UserRoutes.post("/signup", upload,multerErrorHandler,Signup);
 
 UserRoutes.post("/signin",Signin);
-
 UserRoutes.get('/',Auth,getUsers);
 UserRoutes.get('/logout',logout);
 export default UserRoutes;
