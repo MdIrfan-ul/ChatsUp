@@ -3,10 +3,15 @@ import UserModel from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import fs from "fs";
+import multer from "multer";
 
 export const Signup = async (req, res) => {
     try {
         const { name, email, password } = req.body;
+
+        if(!name||!email||!password){
+            return res.status(400).json({success:false,messsage:"All Fields are Required"});
+        }
 
         // Check if the file exists in the request
         if (!req.file) {
@@ -20,7 +25,7 @@ export const Signup = async (req, res) => {
         await user.save();
 
         // Delete the file after saving user details
-        fs.unlinkSync(req.file.path);
+        // fs.unlinkSync(req.file.path);
 
         res.status(200).json({ success: true, message: "User registered successfully", user });
     } catch (error) {
@@ -31,7 +36,13 @@ export const Signup = async (req, res) => {
         } else if (error.code === 11000) {
             // Handle duplicate key error (e.g., email already exists)
             return res.status(400).json({ success: false, message: "Email is already registered" });
-        } else {
+        }else if (error instanceof multer.MulterError) {
+            // Handle Multer-specific errors (like file size limit)
+            if (error.code === 'LIMIT_FILE_SIZE') {
+                return res.status(400).json({ success: false, message: "File size is too large. Max limit is 3MB." });
+            }
+        }
+         else {
             // Handle other types of errors
             return res.status(500).json({ success: false, message: "Internal server error" });
         }
@@ -44,17 +55,19 @@ export const Signin = async(req,res)=>{
 
         const user = await UserModel.findOne({email});
         if(!user){
-            res.status(400).json({success:false,message:"user not found"});
+            return res.status(400).json({success:false,message:"user not found"});
         }
         if(password){
           const passwordMatch=  await bcrypt.compare(password,user.password);
           if(passwordMatch){
+            const userWithoutPassword = user.toObject();
+            delete userWithoutPassword.password;
             const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
             res.cookie('jwt', token, { httpOnly: true, maxAge: 3600000 ,sameSite:"strict"});
-            return res.status(200).json({success:true,message:"user logged in",token});
+            return res.status(200).json({success:true,message:"user logged in",user:userWithoutPassword,token});
 
           }else{
-            res.status(400).json({success:false,message:"Invalid Credentials"});
+            return res.status(400).json({success:false,message:"Invalid Credentials"});
           }
 
         }

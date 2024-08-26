@@ -1,11 +1,11 @@
 import express from "express";
 import { getUsers, logout, Signin, Signup } from "../controllers/UserControllers.js";
-import { upload } from "../middlewares/profile_middelware.js";
+import { multerErrorHandler, upload } from "../middlewares/profile_middelware.js";
 import Auth from "../middlewares/jwtmiddleware.js";
 
 const UserRoutes = express.Router();
 
-UserRoutes.post("/signup", upload.single("profilePicture"),Signup);
+UserRoutes.post("/signup", upload,multerErrorHandler,Signup);
 
 UserRoutes.post("/signin",Signin);
 

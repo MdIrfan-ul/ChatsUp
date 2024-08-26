@@ -1,15 +1,27 @@
 import React from "react";
+import useConversation from "../../store/useConversation";
+import {useAuthContext} from "../../context/AuthContext";
+import extractTime from "../../utils/extractTime";
 
-function Message() {
+function Message({message}) {
+  const baseUrl = import.meta.env.VITE_API_URL;
+  const {authUser} = useAuthContext();
+  const {selectedConversation} = useConversation();
+  const fromMe = message.senderId ===authUser._id;
+  const chatClassName = fromMe ? 'chat-end' :'chat-start';
+  const profilePic = fromMe ? authUser.profilePicture: selectedConversation.profilePicture;
+  const bubbleBgColor = fromMe? 'bg-blue-500': '';
+  const formattedTime = extractTime(message.createdAt);
+  const shakeClass = message.shouldShake ?"shake":"";
   return (
-    <div className="chat chat-end">
+    <div className={`chat ${chatClassName}`}>
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
-          <img src="https://cdn-icons-png.flaticon.com/128/3135/3135715.png" alt="user-profile" />
+          <img src={`${baseUrl}/${profilePic}`} alt="user-profile" />
         </div>
       </div>
-      <div className="chat-bubble text-white bg-blue-500">Hi! What's up!!</div>
-      <div className="chat-footer opacity-50 text-xs flex gap-1 items-center">12:42</div>
+      <div className={`chat-bubble text-white ${bubbleBgColor} ${shakeClass}`}>{message.message}</div>
+      <div className="chat-footer opacity-50 text-xs flex gap-1 items-center">{formattedTime}</div>
     </div>
   );
 }

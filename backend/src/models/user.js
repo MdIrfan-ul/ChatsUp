@@ -25,11 +25,9 @@ const UserSchema = new mongoose.Schema({
   },
   profilePicture: {
     type: String,
-  },
-  status: {
-    type: String,
-    default: "Offline",
-  },
+  }},
+  {
+  timestamps:true
 });
 
 UserSchema.pre("save", async function (next) {
