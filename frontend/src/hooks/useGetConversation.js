@@ -14,7 +14,7 @@ const useGetConversation = () => {
     const getConversations = async ()=>{
         setLoading(true);
         try {
-            const response = await axios.get('http://localhost:8000/api/user/',{headers:{Authorization:localStorage.getItem('token')}});
+            const response = await axios.get('https://chatsup-uz9w.onrender.com/api/user/',{headers:{Authorization:localStorage.getItem('token')}});
             const {data} = response;
             setConversations(data.allUsers);
         } catch (error) {

@@ -11,7 +11,7 @@ const useSendMessages = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/messages/send/${selectedConversation._id}`,
+        `https://chatsup-uz9w.onrender.com/api/messages/send/${selectedConversation._id}`,
         { message },
         { headers: { authorization: localStorage.getItem("token") } }
       );

@@ -9,7 +9,7 @@ const useLogout = ()=>{
     const logout = async ()=>{
         try {
             
-            const response = await axios.get('http://localhost:8000/api/user/logout');
+            const response = await axios.get('https://chatsup-uz9w.onrender.com/api/user/logout');
             const {data} = response;
             localStorage.removeItem('user');
             setAuthUser(null);

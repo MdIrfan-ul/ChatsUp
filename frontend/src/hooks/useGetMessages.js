@@ -13,7 +13,7 @@ const useGetMessages = () => {
 
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:8000/api/messages/${selectedConversation._id}`, {
+                const response = await axios.get(`https://chatsup-uz9w.onrender.com/api/messages/${selectedConversation._id}`, {
                     headers: { Authorization: localStorage.getItem('token') },
                 });
                 const { data } = response;

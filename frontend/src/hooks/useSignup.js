@@ -17,7 +17,7 @@ const useSignup = ()=>{
           formData.append("profilePicture", profilePicture);
     
           const response = await axios.post(
-            "http://localhost:8000/api/user/signup",
+            "https://chatsup-uz9w.onrender.com/api/user/signup",
             formData,
             {
               headers: {
