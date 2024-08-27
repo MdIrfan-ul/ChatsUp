@@ -11,7 +11,7 @@ const useLogout = ()=>{
             
             const response = await axios.get('https://chatsup-uz9w.onrender.com/api/user/logout');
             const {data} = response;
-            localStorage.removeItem('user');
+            localStorage.removeItem('authUser');
             setAuthUser(null);
             toast.success(data.message);
             return ;
