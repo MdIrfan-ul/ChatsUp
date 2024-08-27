@@ -2,6 +2,10 @@
 
 **chatsUp** is a real-time chat application built using the MERN stack (MongoDB, Express.js, React, Node.js). It features a modern, responsive design with Tailwind CSS and DaisyUI, utilizes Context API for state management, and provides real-time notifications with React Hot Toast.
 
+
+## Live Link
+- **Live:** [![Netlify Status](https://api.netlify.com/api/v1/badges/718cf822-5963-440c-b69b-9d03eca95aeb/deploy-status)](https://app.netlify.com/sites/chats-up/deploys)
+
 ## Features
 
 - **Real-Time Messaging:** Users can send and receive messages instantly.

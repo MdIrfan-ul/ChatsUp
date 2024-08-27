@@ -53,7 +53,7 @@ const Login = () => {
           </button>
         </div>
       </form>
-      <p className="text-center text-white mt-4">
+      <p className="text-center text-black mt-4">
         Don't have an account?{" "}
         <NavLink to="/signup" className="text-blue-400 hover:underline">
           Sign up
